@@ -33,6 +33,7 @@
         function draw() {
             // draw text
             if (counter == 9) {
+                // table is full
                 fill(240);
                 noStroke();
                 rect(0, height-100, width, 100);
@@ -64,7 +65,7 @@
         // 4. Functions
 
         function mousePressed() {
-            
+            // a tile is clicked
             for (let y =0; y < size; y++) {
                     for (let x =0; x < size; x++) {
                         let tsize = bsize / size;
@@ -72,12 +73,13 @@
                             mouseX <= (x+1) * tsize &&
                             mouseY >= y * tsize &&
                             mouseY <= (y+1) * tsize) {
-                            // a tile is cliked
+                            // it is empty
                             if (tiles[y][x] != 1){
+                                // mark it in the array
                                 tiles[y][x] = 1;
                                 counter++;
                                 console.table(tiles);
-                                // place mark
+                                // place 'X' or 'O' mark
                                 if (counter%2) {
                                     fill(0);
                                     textSize(24);
@@ -93,12 +95,13 @@
                         }
                     }
                 }
+            // 'new game?' text clicked
             if (counter == 9 &&
                 (mouseX > 0 &&
                 mouseX < width &&
                 mouseY > 300 &&
                 mouseY < 400)) {
-                    restart();
+                restart();
             }    
 
         }
@@ -112,16 +115,14 @@
             line(width*2/3, 0, width*2/3, height-100);
             line(0, (height-100)/3, width,  (height-100)/3);
             line(0, (height-100)*2/3, width, (height-100)*2/3);
-            // setup tiles
+            // setup tiles empty
             for (let y =0; y < size; y++) {
                 tiles[y] = [];
                 for (let x =0; x < size; x++) {
                     tiles[y][x] = 0;
                 }
             }
-            fill(240);
-            noStroke();
-            rect(0, height-100, width, 100);
+            // reset counter
             counter = 0;
         }
     </script>
