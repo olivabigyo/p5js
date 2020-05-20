@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Blaster</title>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.min.js"></script>
+    <script>
+        // Variables
+        // Setup
+        // Draw
+        // Functions
+
+
+        // 1. Variables
+        
+        let submarine = {};
+        let bubbles = [];
+        class Bubble{};
+        let score;
+        let mybub = [];
+
+        // 2. Setup
+        function setup() {
+            frameRate(30);
+            // noLoop();
+            createCanvas(800,500);
+            background('darkblue');
+            // setup submarine
+            submarine.x = height/2;
+            submarine.y = width/3;
+            submarine.width = 25;
+            submarine.height = 25;
+            submarine.speedX = 0;
+            submarine.speedY = 0;
+            score = 0;
+        }
+
+        // 3. Draw
+        function draw() {
+            background('darkblue');
+            noStroke();
+
+            // update submarine position
+            submarine.x += submarine.speedX;
+            submarine.y += submarine.speedY;
+            // draw submarine
+            fill('yellow');
+            ellipse(submarine.x, submarine.y, submarine.width, submarine.height);
+            
+           
+            // create new bubbles 
+            createBubble();  
+
+            // check collision
+            score += collisionPoints();
+            // clean
+            cleanBubbles();
+
+            // print(bubbles.length);
+
+            // update bubbles position
+            for (i = 0; i < bubbles.length; i++) {
+                bubbles[i].x -= bubbles[i].speed;
+            }
+            // draw bubbles
+            for (i = 0; i < bubbles.length; i++) {
+                fill(250);
+                ellipse(bubbles[i].x, bubbles[i].y, bubbles[i].radius);
+            }
+            // show scores
+            fill(255);
+            textSize(24)
+            text('score: '+ score, 20, 40);
+        }
+
+        // 4. Functions
+
+        function keyPressed() {
+            // submarine controls
+            if (key == 'w') {
+                submarine.speedY = -1; 
+            }
+            if (key == 's') {
+                submarine.speedY = 1;
+            }
+            if (key == 'a') {
+                submarine.speedX = -1; 
+            }
+            if (key == 'd') {
+                submarine.speedX = 1;
+            }
+        }
+
+        function createBubble() {
+            // width 5% chance push new bub to the bubbles array
+            if (random() < 0.05) {
+                // create random bubble
+                let bub = new Bubble; 
+                bub.x = width;
+                bub.y = random(height);
+                bub.radius = random(10, 30);
+                bub.speed = floor(random(1,5));
+                // add bubble to bubbles
+                bubbles.push(bub);
+            }
+        }
+
+        function distance(bub) {
+            // submarine.middlePointX
+            let a0 = submarine.x + submarine.width/2;
+            // submarine.middlePointY
+            let a1 = submarine.y + submarine.height/2;
+            // bub.middlePointX
+            let b0 = bub.x + bub.radius / 2; 
+            // bub.middlePointY
+            let b1 = bub.y + bub.radius / 2; 
+            // distance of middlePoints
+            let dist = sqrt((b0 - a0) * (b0 - a0) + (b1 - a1) * (b1 - a1));
+            return dist;
+        }
+
+        function collisionPoints() {
+            // get points from collision with bubble
+            let points = 0;
+            for (i = 0; i < bubbles.length; i++) {
+                // submarine collides with a bubble
+                if (distance(bubbles[i]) < submarine.width/2 + bubbles[i].radius/2) {
+                    // increase points
+                    points += (floor(bubbles[i].radius) + bubbles[i].speed);
+                    // kill bubble
+                    bubbles.splice(i, 1);
+                }   
+            }
+            // print(points)
+            return points;
+        }
+
+        function cleanBubbles() {
+            for (i = 0; i < bubbles.length; i++) {
+                if (bubbles[i].x < 0) {
+                    // kill escaped bubbles
+                    bubbles.splice(i, 1);
+                }
+            }
+        }
+
+    </script>
+</body>
+</html>

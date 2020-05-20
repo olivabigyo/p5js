@@ -13,7 +13,7 @@
         
         let tiles = [];
         let winTiles = []; // winning tiles
-        let size = 3; // 3*3 tiles
+        let size = 4; // 4*4 tiles
         let bsize = 400;
         let moves = 0;
         let restart = false;
@@ -120,7 +120,7 @@
 
         function randomize() {
             let i = 0;
-            while(i < 200) {
+            while(i < 400) {
                 let x = Math.floor(random(0, size))
                 let y = Math.floor(random(0, size))
                 tryToSwap(y, x);
