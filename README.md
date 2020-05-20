@@ -6,9 +6,9 @@ Play online, with W-A-S-D controls or mouseclick
 Pong Game:
 https://olivabigyo.github.io/p5js/Pong%20Game/index.html
 Snake:
-https://olivabigyo.github.io/p5js/Snake/index.htm 
+https://olivabigyo.github.io/p5js/Snake/index.htm
 Sliding Puzzle
-https://olivabigyo.github.io/p5js/Sliding%20Puzzle/index.html  
+https://olivabigyo.github.io/p5js/Sliding%20Puzzle/index.html
 Bubble Blaster
 https://olivabigyo.github.io/p5js/BubbleBlaster/index.html
 Tic Tac Toe
