@@ -15,20 +15,115 @@
 
 
         // 1. Variables
-        
+        let players = [];
+        let tiles = [];
+        let size = 3; // 3*3 tiles
+        let bsize = 300;
+        let counter = 0;
+
+
         // 2. Setup
         function setup() {
-            createCanvas(500,500);
-            background(220);
+            createCanvas(300,400);
+            restart();
         }
+    
 
         // 3. Draw
         function draw() {
-
+            // draw text
+            if (counter == 9) {
+                fill(240);
+                noStroke();
+                rect(0, height-100, width, 100);
+                fill(0);
+                textSize(24);
+                noStroke();
+                text('New game?', 90, 350);
+            } else {
+                if (counter%2 == 0) {
+                    fill(240);
+                    noStroke();
+                    rect(0, height-100, width, 100);
+                    fill(0);
+                    textSize(24);
+                    noStroke();
+                    text('Player 1', 100, 350);
+                } else {
+                    fill(240);
+                    noStroke();
+                    rect(0, height-100, width, 100);
+                    fill(0);
+                    textSize(24);
+                    noStroke();
+                    text('Player 2', 100, 350);
+                }
+            }
         }
 
         // 4. Functions
 
+        function mousePressed() {
+            
+            for (let y =0; y < size; y++) {
+                    for (let x =0; x < size; x++) {
+                        let tsize = bsize / size;
+                        if (mouseX >= x * tsize &&
+                            mouseX <= (x+1) * tsize &&
+                            mouseY >= y * tsize &&
+                            mouseY <= (y+1) * tsize) {
+                            // a tile is cliked
+                            if (tiles[y][x] != 1){
+                                tiles[y][x] = 1;
+                                counter++;
+                                console.table(tiles);
+                                // place mark
+                                if (counter%2) {
+                                    fill(0);
+                                    textSize(24);
+                                    noStroke();        
+                                    text('x', (0.45+x)*tsize, (0.55+y)*tsize);
+                                } else {
+                                    fill(0);
+                                    textSize(24);
+                                    noStroke();        
+                                    text('O', (0.45+x)*tsize, (0.55+y)*tsize);
+                                }
+                            }
+                        }
+                    }
+                }
+            if (counter == 9 &&
+                (mouseX > 0 &&
+                mouseX < width &&
+                mouseY > 300 &&
+                mouseY < 400)) {
+                    restart();
+            }    
+
+        }
+
+        function restart() {
+            background(220);
+            // draw grid
+            stroke(0);
+            strokeWeight(5);
+            line(width/3, 0, width/3, height-100);
+            line(width*2/3, 0, width*2/3, height-100);
+            line(0, (height-100)/3, width,  (height-100)/3);
+            line(0, (height-100)*2/3, width, (height-100)*2/3);
+            // setup tiles
+            for (let y =0; y < size; y++) {
+                tiles[y] = [];
+                for (let x =0; x < size; x++) {
+                    tiles[y][x] = 0;
+                }
+            }
+            fill(240);
+            noStroke();
+            rect(0, height-100, width, 100);
+            counter = 0;
+        }
     </script>
 </body>
 </html>
